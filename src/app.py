@@ -46,7 +46,7 @@ def handle_members():
 def handle_member(member_id):  
     if request.method == "GET":
         members = jackson_family.get_member(member_id)
-        if members == []:
+        if not members:
             response_body = {"message": "Member not found"}
             return response_body, 404
         response_body = {"message": "Member data",
@@ -55,11 +55,13 @@ def handle_member(member_id):
         
     if request.method == "DELETE":
         delete_member = jackson_family.delete_member(member_id)
+        if not delete_member:
+            response_body = {"message": "Member not found"}
+            return response_body, 404
         response_body = {"message": "Member deleted",
                          "results": delete_member}
         return jsonify(response_body), 200
-
-
+    
 
 # This only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':

@@ -40,7 +40,10 @@ class FamilyStructure:
         # members = list(filter(lambda row: row["id"] != member_id, self._members))
         # Opción 3: list comprehension
         # members = [row for row in self._members if row["id"] != member_id]
-        self._members = [row for row in self._members if row["id"] != member_id]
+        filter = [row for row in self._members if row["id"] != member_id]
+        if len(filter) == len(self._members):
+            return None
+        self._members = filter
         return self._members
         
 
